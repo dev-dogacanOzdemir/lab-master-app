@@ -44,6 +44,7 @@
     java -version
     mvn -version
     mysql --version
+    node -v
     ```
 2. Bir dosya olarak istediğiniz yere kopyalayın.
   
