@@ -1,7 +1,5 @@
 <h1 aling="center">labMaster PRO</h1>
 
-**Proje ile ilgili detaylı rapor ProjeRaporu.pdf dosyasında mevcut.**
-
 <p align="center">
   <img width="400" height="400" src="lab-master-frontend/public/labmasterlogo.ico">
 </p>
