@@ -55,8 +55,7 @@
   
    - Terminal üzerinden ilgili dosyaya gelip
    ```bash
-   chmod +x run_app.sh
-   chmod +x create_db.sh
+   chmod +x start-all-app-linux.sh
    ```
    kodlarını yazın.
    
