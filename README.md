@@ -20,22 +20,20 @@
 
 <h2 id="giris">Giriş</h2>
 
-- Bu projeyi geliştirirken MVC (Model-View-Controller) yapısını kullandım. MVC, uygulamayı üç temel bileşene ayırarak modüler bir yapı oluşturur: Model, View ve Controller. _Spring Boot, Spring Data JPA_ ve _Hibernate_ gibi teknolojilerle birlikte kullanıldığında, MVC'nin sağladığı avantajlar daha da belirgin hale gelir.
+- Model kısmı, veri modellemesini ve iş mantığını içerir. Bu sayede, bu proje içerisinde laboratuvar raporlarının tanımlanması, güncellenmesi ve silinmesi gibi işlemler kolaylıkla gerçekleştirilebilir. _Spring Data JPA_ gibi ORM (Object-Relational Mapping) araçları, veritabanı işlemlerini basitleştirir ve veri modellemesini destekler, bu da geliştirme sürecini hızlandırır.
 
-- Model kısmı, veri modellemesini ve iş mantığını içerir. Bu sayede, bu proje içerisinde laboratuvar raporlarının tanımlanması, güncellenmesi ve silinmesi gibi işlemler kolaylıkla gerçekleştirilebilir. _Spring Data JPA_ ve _Hibernate_ gibi ORM (Object-Relational Mapping) araçları, veritabanı işlemlerini basitleştirir ve veri modellemesini destekler, bu da geliştirme sürecini hızlandırır.
-
-- View kısmı, kullanıcı arayüzünü temsil eder. MVC yapısı sayesinde, kullanıcı arayüzü ve iş mantığı birbirinden ayrılarak daha modüler hale gelir. Bu durum ise projelerde kullanıcı arayüzünün esnek ve kolayca değiştirilebilir olmasını sağlar.
+- lab-master-frontend, React, Redux Toolkit ve Mantine UI kullanılarak geliştirilmiş bir yapı sunar ve arayüz bileşenleri barındırır.
 
 - Controller kısmı, istemci isteklerini alır, iş mantığını yürütür ve sonuçları kullanıcı arayüzüne aktarır. Spring Boot'un sunduğu kolaylık ve esneklik sayesinde, istekleri işleyen ve doğru controller'a yönlendiren bir yapı oluşturulabilir. Bu da uygulamanın genel performansını ve yönetilebilirliğini artırır.
 
-- Sonuç olarak, MVC yapısı "labMaster PRO" gibi laboratuvar raporlama sistemleri için ideal bir seçimdir. _Spring Boot, Spring Data JPA_ ve _Hibernate_ gibi teknolojilerle bir araya geldiğinde, geliştirme süreci daha kolay hale gelir ve uygulama daha esnek, ölçeklenebilir ve bakımı kolay bir yapıya sahip olur.
+- Sonuç olarak, REST yapısı "labMaster PRO" gibi laboratuvar raporlama sistemleri için ideal bir seçimdir. _Spring Boot, Spring Data JPA_ gibi teknolojilerle bir araya geldiğinde, geliştirme süreci daha kolay hale gelir ve uygulama daha esnek, ölçeklenebilir ve bakımı kolay bir yapıya sahip olur.
 
 <h2 id="gereksinimler">Gereksinimler</h2>
 
 - **Java Development Kit (JDK)**: 21
 - **MySQL**: 8.0 veya üstü
 - **Apache Maven**: 3.9.0 veya üstü
-- **Node.js
+- **Node.js: 20.13.1 ve üstü
   
 <h2 id="kurulum">Kurulum</h2>
 
@@ -72,51 +70,35 @@
    **Linux :**
  - labMasterPRO(Linux).sh scriptini çalıştırın. 
 
-2. Tarayıcınızda `http://localhost:8080` adresine gidin.
+2. Tarayıcınızda `http://localhost:5173` adresine gidin.
 
 <h2 id="proje-yapisi">Proje Yapısı</h2>
 
 ```plaintext
-lab-master-v1.0
+lab-master-backend
 ├── src
 │   ├── main
 │   │   ├── java
 │   │   │   └── com
 │   │   │       └── doa
-│   │   │           └── labmasterv10
+│   │   │           └── lab-master-backend
 │   │   │               └── Config
-│   │   │                   └── ResourceNotFoundException.java
-│   │   │                   └── SecurityConfig.java
+│   │   │                   └── CorsConfig.java //İlgili isteklerin React uygulaması tarafına gönderilmesi ve alınmasındaki isteklerin sağlanmasını sağlaya yapıdır.
 │   │   │               └── Controller
-│   │   │                   └── HomeController.java
 │   │   │                   └── LaborantController.java
-│   │   │                   └── ReportController.java
+│   │   │                   └── LabReportController.java
 │   │   │               └── Entities
 │   │   │                   └── Laborant.java
-│   │   │                   └── Report.java
+│   │   │                   └── LabReport.java
 │   │   │               └── Repository
 │   │   │                   └── LaborantRepository.java
-│   │   │                   └── ReportRepository.java
+│   │   │                   └── LabReportRepository.java
 │   │   │               └── Service
 │   │   │                   └── LaborantService.java
-│   │   │                   └── ReportService.java
-│   │   │               ├── Application.java
+│   │   │                   └── LabReportService.java
+│   │   │               ├── LabMasterBackendApplication.java
 │   │   ├── resources
 │   │       ├── application.properties
-│   │       ├── static
-│   │           └── images
-│   │       ├── templates
-│   │           └── createLaborant.html
-│   │           └── createReport.html
-│   │           └── editLaborant.html
-│   │           └── editReport.html
-│   │           └── index.html
-│   │           └── laborantDetails.html
-│   │           └── laborants.html
-│   │           └── reportDetails.html
-│   │           └── reports.html
-│   │       ├── uploads
-│   │           └──**Hasta dosyalarının yüklendiği ve tutulduğu dizin**
 │   └── test
 │       ├── java
 │       │   └── com
@@ -133,15 +115,53 @@ lab-master-v1.0
 **Tüm dosyaların ilgili kodlarının açıklamaları yorum satırı olarak içerisinde bulunmaktadır.**
 
 
-- `src/main/java/com/doa/labmasterv10/Config`: Proje yapılandırması için gerekli sınıfları içerir.
-- `src/main/java/com/doa/labmasterv10/Controller`: Gelen istekleri işler ve uygun iş mantığı kodunu çalıştırır. 
-- `src/main/java/com/doa/labmasterv10/Entities`: Veritabanı tablolarını ve ilişkilerini temsil eden Java sınıflarını içerir.
-- `src/main/java/com/doa/labmasterv10/Repository`: Veritabanı erişim işlemlerini gerçekleştiren repository sınıflarını içerir.
-- `src/main/java/com/doa/labmasterv10/Service`: İş mantığının bulunduğu yerdir. Burada, işlemlerin gerçekleştirilmesi için gerekli olan farklı bileşenler ve servisler bir araya getirilir.
-- `src/main/java/com/doa/labmasterv10`: Uygulamanın giriş noktası olan Application sınıfını içerir.
+- `src/main/java/com/doa/lab-master-backend/Config`: Proje yapılandırması için gerekli sınıfları içerir.
+- `src/main/java/com/doa/lab-master-backend/Controller`: Gelen istekleri işler ve uygun iş mantığı kodunu çalıştırır. 
+- `src/main/java/com/doa/lab-master-backend/Entities`: Veritabanı tablolarını ve ilişkilerini temsil eden Java sınıflarını içerir.
+- `src/main/java/com/doa/lab-master-backend/Repository`: Veritabanı erişim işlemlerini gerçekleştiren repository sınıflarını içerir.
+- `src/main/java/com/doa/lab-master-backend/Service`: İş mantığının bulunduğu yerdir. Burada, işlemlerin gerçekleştirilmesi için gerekli olan farklı bileşenler ve servisler bir araya getirilir.
+- `src/main/java/com/doa/lab-master-backend`: Uygulamanın giriş noktası olan Application sınıfını içerir.
 - `src/main/resources`: Uygulama yapılandırma dosyalarını içerir.
-- `src/main/resources/static`: Statik dosyaları içerir.
-- `src/main/resources/templates`: Thymeleaf şablon dosyalarını içerir.
 - `src/test/java/com/example/demo`: Test sınıflarını içerir.
 
 ##
+
+```plaintext
+lab-master-frontend
+├── node_modules //package.json dosyasındaki gerekli kurulumların sağlandığı dosyadır.
+├── public
+│   └── labmasterlogo.ico
+├── src
+│   └── App.css
+│   └── App.tsx
+│   └── HeaderMenu.module.css
+│   └── HeaderMenu.tsx
+│   └── http-common.tsx
+│   └── index.css
+│   └── main.tsx
+│   └── postcss.config.cjs
+│   └── store.tsx
+│   ├── assets
+│   │   └── home.png //Anasayfadaki görüntü
+│   ├── components
+│   │   └── AddLaborantForm.tsx
+│   │   └── AddLabRaportForm.tsx
+│   │   └── CardGradient.tsx
+│   │   └── LaborantDetails.tsx
+│   │   └── LaborantList.tsx
+│   │   └── LabReportDetails.tsx
+│   │   └── LabReportList.tsx
+│   │   └── UpdateLaborantForm.tsx
+│   │   └── UpdateLabReportForm.tsx
+│   ├── css
+│   │   └── CartGradient.module.css
+│   │   └── TableSort.module.css
+│   ├── pages
+│   │   └── AddLaborant.tsx
+│   │   └── AddReport.tsx
+│   │   └── AllLaborants.tsx
+│   │   └── AllReports.tsx
+│   │   └── Home.tsx
+└── index.html
+└── package.json
+```
