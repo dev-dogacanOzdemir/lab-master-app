@@ -164,7 +164,6 @@ lab-master-frontend
 │   │   └── Home.tsx
 └── index.html
 └── package.json
-```
 
 ```
 **Tüm dosyaların ilgili kodlarının açıklamaları yorum satırı olarak içerisinde bulunmaktadır.**
