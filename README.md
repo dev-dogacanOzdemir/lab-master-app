@@ -154,8 +154,8 @@ lab-master-frontend
 │   │   └── UpdateLaborantForm.tsx
 │   │   └── UpdateLabReportForm.tsx
 │   ├── css
-│   │   └── CartGradient.module.css
-│   │   └── TableSort.module.css
+│   │   └── CartGradient.module.css //CartGradient css yapılandırmasıdır.
+│   │   └── TableSort.module.css //Listeleme işlemlerinde kullanılan Mantine UI yapılandırmasının css yapılandırmasıdır.
 │   ├── pages
 │   │   └── AddLaborant.tsx
 │   │   └── AddReport.tsx
@@ -166,7 +166,7 @@ lab-master-frontend
 └── package.json
 ```
 
-```plaintext
+```
 **Tüm dosyaların ilgili kodlarının açıklamaları yorum satırı olarak içerisinde bulunmaktadır.**
 
 
@@ -189,4 +189,5 @@ lab-master-frontend
 - `lab-master-frontend/components/LabReportDetails.tsx` : Rapor listelemelerinin bulunduğu görünüm ve API isteklerinin sağlandığı yapıdır.
 - `lab-master-frontend/components/UpdateLaborantForm.tsx` : Laborant güncellemelerinin bulunduğu görünüm ve API isteklerinin sağlandığı yapıdır.
 - `lab-master-frontend/components/UpdateLabReportForm.tsx` : Laborant güncellemelerinin bulunduğu görünüm ve API isteklerinin sağlandığı yapıdır.
+- `lab-master-frontend/pages` : Yönlendirilmiş sayfalarda gerekli yapıların çağırılmasının sağlandığı yerlerdir. (Düzgün bir yapı oluşması amacıyla oluşturulmuştur.)
 ##
