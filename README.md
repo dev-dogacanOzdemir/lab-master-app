@@ -165,3 +165,28 @@ lab-master-frontend
 └── index.html
 └── package.json
 ```
+
+```
+**Tüm dosyaların ilgili kodlarının açıklamaları yorum satırı olarak içerisinde bulunmaktadır.**
+
+
+- `lab-master-frontend/node-modules`: package.json dosyasındaki gerekli kurulumların sağlandığı dosyadır.
+- `lab-master-frontend/public`: Genel proje içerisinden erişilebilecek yapıları içerir.
+- `lab-master-frontend/src/App.css`: Genel projenin stil yapılandırmasını içerir.
+- `lab-master-frontend/src/App.tsx`: Genel projenin çalıştığı React sayfasıdır.
+- `lab-master-frontend/src/HeaderMenu.module.css`: Navigation Bar yapısının stil ayarlamalarını içerir.
+- `lab-master-frontend/src/HeaderMenu.tsx`: Navigation Bar yapısını içerir.
+- `lab-master-frontend/src/http-common.tsx`: Gerekli API yapılandırmasını içerir.
+- `lab-master-frontend/src/main.tsx`: Ana React uygulamasının çağırıldığı en geniş yapıdır.
+- `lab-master-frontend/src/postcss.config.cjs`: PostCSS modülünün ayarlamalarının yapıldığı yapıdır.
+- `lab-master-frontend/src/store.tsx`: Redux Tool Kit için gerekli store yapılanmasının olduğu yapıdır.
+- `lab-master-frontend/components/AddLaborantForm.tsx` : Laborant ekleme formunun bulunduğu görünüm ve API isteklerinin sağlandığı yapıdır.
+- `lab-master-frontend/components/AddLabRaport.tsx` : Rapor ekleme formunun bulunduğu görünüm ve API isteklerinin sağlandığı yapıdır.
+- `lab-master-frontend/components/CartGradient.tsx` : Ana sayfadaki yönlendirmeye yarayan büyük butonların tanımlandığı yapıdır.
+- `lab-master-frontend/components/LaborantDetails.tsx` : Laborant detaylarının bulunduğu görünüm ve API isteklerinin sağlandığı yapıdır.
+- `lab-master-frontend/components/LaborantList.tsx` : Laborant listelemelerinin bulunduğu görünüm ve API isteklerinin sağlandığı yapıdır.
+- `lab-master-frontend/components/LabReportDetails.tsx` : Rapor detaylarının bulunduğu görünüm ve API isteklerinin sağlandığı yapıdır.
+- `lab-master-frontend/components/LabReportDetails.tsx` : Rapor listelemelerinin bulunduğu görünüm ve API isteklerinin sağlandığı yapıdır.
+- `lab-master-frontend/components/UpdateLaborantForm.tsx` : Laborant güncellemelerinin bulunduğu görünüm ve API isteklerinin sağlandığı yapıdır.
+- `lab-master-frontend/components/UpdateLabReportForm.tsx` : Laborant güncellemelerinin bulunduğu görünüm ve API isteklerinin sağlandığı yapıdır.
+##
