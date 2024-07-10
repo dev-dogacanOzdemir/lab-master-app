@@ -3,7 +3,7 @@
 **Proje ile ilgili detaylı rapor ProjeRaporu.pdf dosyasında mevcut.**
 
 <p align="center">
-  <img width="400" height="400" src="src/main/resources/static/images/labmasterlogo.png">
+  <img width="400" height="400" src="lab-master-frontend/public/labmasterlogo.ico">
 </p>
 
 - "_labMaster PRO_" adında bir proje geliştirdim. Bu proje, laboratuvar raporlama süreçlerini yönetmek için sistem sunar. _Spring Boot_ kullanılarak geliştirilmiş ve veritabanı işlemleri için _Spring Data JPA_ kullanılmıştır. Ayrıca _Maven_ aracıyla yapılandırılmıştır. Projede, laboratuvar raporlarının tanımlanması, görüntülenmesi, güncellenmesi ve silinmesi gibi işlemleri gerçekleştirmek için gerekli olan temel işlevselliği sağlayacak yapılar bulunmaktadır. Bu yapılar, rapor tanımları için gerekli veri modellemesini, veritabanı etkileşimlerini ve iş mantığını içerir. Ayrıca, raporlara yapılan aramaların ve sıralamaların kolayca yapılabilmesi için uygun yapılar sunulmaktadır. "_labMaster PRO_" projesi, laboratuvar raporlama süreçlerini etkin bir şekilde yönetmek için kullanılabilir.
