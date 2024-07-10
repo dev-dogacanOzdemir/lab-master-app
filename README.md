@@ -166,7 +166,7 @@ lab-master-frontend
 └── package.json
 ```
 
-```
+```plaintext
 **Tüm dosyaların ilgili kodlarının açıklamaları yorum satırı olarak içerisinde bulunmaktadır.**
 
 
