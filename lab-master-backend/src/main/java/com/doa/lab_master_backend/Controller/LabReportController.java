@@ -2,7 +2,6 @@ package com.doa.lab_master_backend.Controller;
 
 import com.doa.lab_master_backend.DTO.LabReportDTO;
 import com.doa.lab_master_backend.Service.LabReportService;
-import com.doa.lab_master_backend.Service.LaborantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +17,6 @@ import java.util.List;
 public class LabReportController {
     @Autowired
     private LabReportService labReportService;
-
-    @Autowired
-    private LaborantService laborantService;
 
     @PostMapping
     public ResponseEntity<LabReportDTO> createLabReport(@RequestParam(value = "file", required = false) MultipartFile file,
