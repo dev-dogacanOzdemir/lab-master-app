@@ -12,8 +12,7 @@ import LaborantDetails from './components/LaborantDetails';
 import LabReportDetails from './components/LabReportDetails';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import PrivateRoute from './PrivateRoute'; // Yeni PrivateRoute bileşenimizi import ettik
-import { useState, useEffect } from 'react'; // State yönetimi için gerekli importlar
+import { useState, useEffect } from 'react';
 
 function App() {
   const location = useLocation();
@@ -42,13 +41,34 @@ function App() {
             </div>
             <div className='ortala'>
               <Routes>
-                <Route path="/home" element={<PrivateRoute isAuthenticated={isAuthenticated} element={Home} />} />
-                <Route path="/add-report" element={<PrivateRoute isAuthenticated={isAuthenticated} element={AddReport} />} />
-                <Route path="/all-reports" element={<PrivateRoute isAuthenticated={isAuthenticated} element={AllReports} />} />
-                <Route path="/add-laborant" element={<PrivateRoute isAuthenticated={isAuthenticated} element={AddLaborant} />} />
-                <Route path="/all-laborants" element={<PrivateRoute isAuthenticated={isAuthenticated} element={AllLaborants} />} />
-                <Route path="/laborants/:id" element={<PrivateRoute isAuthenticated={isAuthenticated} element={LaborantDetails} />} />
-                <Route path='/labreports/:id' element={<PrivateRoute isAuthenticated={isAuthenticated} element={LabReportDetails} />} />
+                <Route
+                  path="/home"
+                  element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/add-report"
+                  element={isAuthenticated ? <AddReport /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/all-reports"
+                  element={isAuthenticated ? <AllReports /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/add-laborant"
+                  element={isAuthenticated ? <AddLaborant /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/all-laborants"
+                  element={isAuthenticated ? <AllLaborants /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/laborants/:id"
+                  element={isAuthenticated ? <LaborantDetails /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path='/labreports/:id'
+                  element={isAuthenticated ? <LabReportDetails /> : <Navigate to="/login" />}
+                />
               </Routes>
             </div>
           </div>
