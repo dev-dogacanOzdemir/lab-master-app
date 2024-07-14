@@ -21,7 +21,8 @@ interface LabReport {
     diagnosisTitle: string;
     diagnosisDetails: string;
     reportDate: string;
-    laborant: Laborant;
+    laborantId: number;
+    laborant?: Laborant;  // Laborant bilgisi eklenebilir
 }
 
 interface ThProps {
@@ -96,8 +97,16 @@ const LabReportList: React.FC = () => {
     const fetchLabReports = async () => {
         try {
             const response = await apiClient.get('/labreports');
-            setLabReports(response.data);
-            setSortedData(response.data);
+            const labReports: LabReport[] = response.data;
+
+            // Laborant bilgilerini al ve raporlarla birleştir
+            const updatedLabReports = await Promise.all(labReports.map(async (report) => {
+                const laborantResponse = await apiClient.get(`/laborants/${report.laborantId}`);
+                return { ...report, laborant: laborantResponse.data };
+            }));
+
+            setLabReports(updatedLabReports);
+            setSortedData(updatedLabReports);
             setLoading(false);
         } catch (error) {
             console.error('Raporları yüklenirken bir hata oluştu : ', error);
@@ -151,7 +160,11 @@ const LabReportList: React.FC = () => {
                 <Table.Td>{labReport.diagnosisTitle}</Table.Td>
                 <Table.Td>{labReport.diagnosisDetails}</Table.Td>
                 <Table.Td>{labReport.reportDate}</Table.Td>
-                <Table.Td>{`${labReport.laborant.laborantFirstName} ${labReport.laborant.laborantLastName}`}</Table.Td>
+                <Table.Td>
+                    {labReport.laborant
+                        ? `${labReport.laborant.laborantFirstName} ${labReport.laborant.laborantLastName}`
+                        : 'Laborant bilgisi eksik'}
+                </Table.Td>
                 <Table.Td>
                     <Group style={{ padding: '5px' }}>
                         <Button color="blue" onClick={() => handleEdit(labReport.id)}>
