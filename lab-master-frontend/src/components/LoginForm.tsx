@@ -6,6 +6,7 @@ import {
     Title,
     Container,
     Button,
+    Group,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useNavigate } from 'react-router-dom';
@@ -76,11 +77,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ setIsAuthenticated }) => {
                             mt="md"
                             {...form.getInputProps('password')}
                         />
-
-                        <Button fullWidth mt="xl" type="submit">
-                            Giriş Yap
-                        </Button>
+                        <Group mt="xl">
+                            <Button fullWidth type="submit">
+                                Giriş Yap
+                            </Button>
+                        </Group>
                     </form>
+                    <Button
+                        fullWidth
+                        mt="md"
+                        variant="outline"
+                        onClick={() => navigate('/register')}
+                    >
+                        Kayıt Ol
+                    </Button>
                 </Paper>
             </Container>
         </div>

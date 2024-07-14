@@ -1,43 +1,70 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from '@mantine/form';
 import { TextInput, Button, Box, Group } from '@mantine/core';
 import apiClient from '../http-common';
-import '@mantine/dates/styles.css'
-const AddLaborant: React.FC = () => {
-    const [laborantFirstName, setLaborantFirstName] = useState('');
-    const [laborantLastName, setLaborantLastName] = useState('');
-    const [hospitalId, setHospitalId] = useState('');
+import '@mantine/dates/styles.css';
+import axios from 'axios';
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+const AddLaborant: React.FC = () => {
+    const form = useForm({
+        initialValues: {
+            laborantFirstName: '',
+            laborantLastName: '',
+            hospitalId: '',
+        }
+    });
+
+    const handleSubmit = async (values: typeof form.values) => {
         const newLaborant = {
-            laborantFirstName: laborantFirstName,
-            laborantLastName: laborantLastName,
-            hospitalId,
+            laborantFirstName: values.laborantFirstName,
+            laborantLastName: values.laborantLastName,
+            hospitalId: values.hospitalId,
         };
 
         try {
             const response = await apiClient.post('/laborants', newLaborant);
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
                 alert('Laborant başarıyla eklendi!');
-                setLaborantFirstName('');
-                setLaborantLastName('');
-                setHospitalId('');
+                form.reset();
             } else {
                 console.error('Laborant eklenirken bir hata oluştu:', response);
             }
         } catch (error) {
-            console.error('Laborant eklenirken bir hata oluştu:', error);
+            if (axios.isAxiosError(error)) {
+                // Sadece error kullanılırsa hata veriyor. Bu yüzden hataları axios ile yakaladım.
+                switch (error.response?.status) {
+                    case 400:
+                        alert('Hatalı istek: Lütfen girdiğiniz bilgileri kontrol edin.');
+                        break;
+                    case 401:
+                        alert('Yetkisiz erişim: Bu işlemi yapmak için giriş yapmalısınız.');
+                        break;
+                    case 403:
+                        alert('Erişim engellendi: Bu işlemi yapma yetkiniz bulunmuyor.');
+                        break;
+                    case 404:
+                        alert('Bulunamadı: İlgili kaynak bulunamadı, lütfen adresi kontrol edin.');
+                        break;
+                    case 408:
+                        alert('Zaman aşımı: İstek zaman aşımına uğradı, lütfen tekrar deneyin.');
+                        break;
+                    default:
+                        alert('Bilinmeyen bir hata oluştu: Lütfen tekrar deneyin.');
+                }
+            } else {
+                console.error('Beklenmedik bir hata oluştu:', error);
+                alert('Beklenmedik bir hata oluştu: Lütfen tekrar deneyin.');
+            }
         }
     };
 
     return (
-        <Box mx="auto" >
-            <form onSubmit={handleSubmit}>
+        <Box mx="auto">
+            <form onSubmit={form.onSubmit(handleSubmit)}>
                 <TextInput
                     label="Adı"
                     placeholder="Adı"
-                    value={laborantFirstName}
-                    onChange={(e) => setLaborantFirstName(e.target.value)}
+                    {...form.getInputProps('laborantFirstName')}
                     required
                     mb="sm"
                     pattern="[A-Za-zÇçĞğİıÖöŞşÜü]*"
@@ -45,8 +72,7 @@ const AddLaborant: React.FC = () => {
                 <TextInput
                     label="Soyadı"
                     placeholder="Soyadı"
-                    value={laborantLastName}
-                    onChange={(e) => setLaborantLastName(e.target.value)}
+                    {...form.getInputProps('laborantLastName')}
                     required
                     mb="sm"
                     pattern="[A-Za-zÇçĞğİıÖöŞşÜü]*"
@@ -54,11 +80,9 @@ const AddLaborant: React.FC = () => {
                 <TextInput
                     label="Hastane ID"
                     placeholder="Hastane ID"
-                    value={hospitalId}
-                    onChange={(e) => setHospitalId(e.target.value)}
+                    {...form.getInputProps('hospitalId')}
                     required
                     mb="sm"
-                    pattern="\d*"
                     maxLength={7}
                     minLength={7}
                 />
