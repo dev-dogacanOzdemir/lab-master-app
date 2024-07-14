@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, Text, Loader, Table, Button } from '@mantine/core';
+import { Card, Text, Loader, Table, Button, ScrollArea } from '@mantine/core';
 import apiClient from '../http-common';
 import AddLabReport from '../components/AddLabRaportForm';
 import '../App.css';
@@ -54,10 +54,12 @@ const LaborantDetails: React.FC = () => {
             setLoading(false);
         }
     };
+
     const handleAddReportSuccess = () => {
         setAddingReport(false);
         fetchLabReports();
     };
+
     if (loading) {
         return <Loader />;
     }
@@ -78,39 +80,38 @@ const LaborantDetails: React.FC = () => {
             <Text style={{ fontSize: '25px' }} mt="lg" mb="md">
                 <b>Raporlar</b>
             </Text>
-            <div className="table-wrapper">
+            <ScrollArea style={{ maxHeight: 400 }}>
                 {labReports.length > 0 ? (
-                    <Table className="table">
-                        <thead>
-                            <tr>
-                                <th>Dosya Numarası</th>
-                                <th>Hasta Adı</th>
-                                <th>Hasta Soyadı</th>
-                                <th>Teşhis Başlığı</th>
-                                <th>Teşhis Detayları</th>
-                                <th>Rapor Tarihi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <Table highlightOnHover withTableBorder withColumnBorders >
+                        <Table.Thead style={{ backgroundColor: '#f5f5f5' }}>
+                            <Table.Tr>
+                                <Table.Td style={{ textAlign: 'center' }}>Dosya Numarası</Table.Td>
+                                <Table.Td style={{ textAlign: 'center' }}>Hasta Adı</Table.Td>
+                                <Table.Td style={{ textAlign: 'center' }}>Hasta Soyadı</Table.Td>
+                                <Table.Td style={{ textAlign: 'center' }}>Teşhis Başlığı</Table.Td>
+                                <Table.Td style={{ textAlign: 'center' }}>Teşhis Detayları</Table.Td>
+                                <Table.Td style={{ textAlign: 'center' }}>Rapor Tarihi</Table.Td>
+                            </Table.Tr>
+                        </Table.Thead>
+                        <Table.Tbody>
                             {labReports.map((report) => (
-                                <tr key={report.id}>
-                                    <td>{report.fileNumber}</td>
-                                    <td>{report.patientName}</td>
-                                    <td>{report.patientSurname}</td>
-                                    <td>{report.diagnosisTitle}</td>
-                                    <td>{report.diagnosisDetails}</td>
-                                    <td>{report.reportDate}</td>
-                                </tr>
+                                <Table.Tr key={report.id}>
+                                    <Table.Td style={{ textAlign: 'center' }}>{report.fileNumber}</Table.Td>
+                                    <Table.Td style={{ textAlign: 'center' }}>{report.patientName}</Table.Td>
+                                    <Table.Td style={{ textAlign: 'center' }}>{report.patientSurname}</Table.Td>
+                                    <Table.Td style={{ textAlign: 'center' }}>{report.diagnosisTitle}</Table.Td>
+                                    <Table.Td style={{ textAlign: 'center' }}>{report.diagnosisDetails}</Table.Td>
+                                    <Table.Td style={{ textAlign: 'center' }}>{report.reportDate}</Table.Td>
+                                </Table.Tr>
                             ))}
-                        </tbody>
+                        </Table.Tbody>
                     </Table>
                 ) : (
                     <Text>Bu laboranta ait rapor bulunmamaktadır.</Text>
                 )}
-            </div>
+            </ScrollArea>
             {addingReport ? (
-                <AddLabReport />
-
+                <AddLabReport onSuccess={handleAddReportSuccess} />
             ) : (
                 <Button mt="lg" onClick={() => setAddingReport(true)}>
                     Yeni Rapor Ekle

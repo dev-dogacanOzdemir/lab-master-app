@@ -5,7 +5,7 @@ import AddLaborant from './pages/AddLaborant';
 import AddReport from './pages/AddReport';
 import AllReports from './pages/AllReports';
 import AllLaborants from './pages/AllLaborants';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { HeaderMenu } from './HeaderMenu';
 import LaborantDetails from './components/LaborantDetails';
@@ -19,7 +19,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Burada kullanıcı oturum kontrolünü yapabilirsiniz. Örneğin, bir token var mı yok mu kontrolü:
+    // Burada oturum kontrolü yapılıyor. Örneğin, bir token var mı yok mu kontrolü
     const token = localStorage.getItem('token');
     setIsAuthenticated(!!token);
   }, []);
@@ -27,7 +27,7 @@ function App() {
   const hideHeader = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/';
 
   return (
-    <MantineProvider>
+    <MantineProvider theme={DEFAULT_THEME}>
       <div>
         <Routes>
           <Route path='/login' element={<LoginPage setIsAuthenticated={setIsAuthenticated} />} />
@@ -36,10 +36,10 @@ function App() {
         </Routes>
         {!hideHeader && (
           <div>
-            <div className='ortala'>
+            <div className='align-middle'>
               <HeaderMenu setIsAuthenticated={setIsAuthenticated} />
             </div>
-            <div className='ortala'>
+            <div className='align-middle'>
               <Routes>
                 <Route
                   path="/home"

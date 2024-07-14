@@ -48,7 +48,7 @@ public class LabReportService {
     }
 
     public LabReportDTO updateLabReport(Long id, LabReportDTO updatedLabReportDTO, MultipartFile file) throws IOException {
-        Optional<Laborant> laborant = laborantRepository.findById(updatedLabReportDTO.getLaborantId());
+                Optional<Laborant> laborant = laborantRepository.findById(updatedLabReportDTO.getLaborantId());
         if (!laborant.isPresent()) {
             throw new IllegalArgumentException("Laborant not found");
         }
@@ -76,6 +76,7 @@ public class LabReportService {
             return labReportMapper.toDTO(labReportRepository.save(labReport));
         });
     }
+
 
     public void deleteLabReport(Long id) {
         labReportRepository.deleteById(id);

@@ -44,10 +44,15 @@ public class LabReportController {
                                                         @RequestParam(value = "file", required = false) MultipartFile file,
                                                         @ModelAttribute LabReportDTO labReportDTO) {
         try {
+            labReportDTO.setId(id);
             LabReportDTO updatedLabReport = labReportService.updateLabReport(id, labReportDTO, file);
             return ResponseEntity.ok(updatedLabReport);
         } catch (IOException e) {
+            e.printStackTrace();
             return ResponseEntity.status(500).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).body(null);
         }
     }
 
