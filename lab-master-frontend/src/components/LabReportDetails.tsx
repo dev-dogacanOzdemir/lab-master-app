@@ -19,6 +19,7 @@ interface LabReport {
     diagnosisDetails: string;
     reportDate: string;
     reportImage?: string;
+    laborantId: number;
     laborant?: Laborant;
 }
 
@@ -34,7 +35,14 @@ const LabReportDetails: React.FC = () => {
     const fetchLabReport = async () => {
         try {
             const response = await apiClient.get(`/labreports/${id}`);
-            setLabReport(response.data);
+            const report = response.data;
+
+            // Laborant bilgilerini al
+            const laborantResponse = await apiClient.get(`/laborants/${report.laborantId}`);
+            const laborant = laborantResponse.data;
+
+            // Laborant bilgilerini rapora ekle
+            setLabReport({ ...report, laborant });
             setLoading(false);
         } catch (error) {
             console.error('Rapor detayları alınırken bir hata oluştu:', error);
@@ -49,6 +57,7 @@ const LabReportDetails: React.FC = () => {
     if (!labReport) {
         return <Text>Rapor bulunamadı.</Text>;
     }
+
     return (
         <Card shadow="sm" padding="lg">
             <Text style={{ fontSize: '35px' }} mb="md">

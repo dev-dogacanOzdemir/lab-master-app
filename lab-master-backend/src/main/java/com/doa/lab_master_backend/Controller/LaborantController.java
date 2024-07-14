@@ -1,12 +1,12 @@
 package com.doa.lab_master_backend.Controller;
-import com.doa.lab_master_backend.Entities.Laborant;
+import com.doa.lab_master_backend.DTO.LaborantDTO;
 import com.doa.lab_master_backend.Service.LaborantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 @CrossOrigin("https://localhost:5173")
 @RestController
 @RequestMapping("/api/laborants")
@@ -15,25 +15,26 @@ public class LaborantController {
     private LaborantService laborantService;
 
     @PostMapping
-    public ResponseEntity<Laborant> createLaborant(@RequestBody Laborant laborant) {
-        Laborant savedLaborant = laborantService.saveLaborant(laborant);
+    public ResponseEntity<LaborantDTO> createLaborant(@RequestBody LaborantDTO laborantDTO) {
+        LaborantDTO savedLaborant = laborantService.saveLaborant(laborantDTO);
         return ResponseEntity.ok(savedLaborant);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Laborant> getLaborantById(@PathVariable Long id) {
-        Optional<Laborant> laborant = laborantService.getLaborantById(id);
-        return laborant.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<LaborantDTO> getLaborantById(@PathVariable Long id) {
+        return laborantService.getLaborantById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public List<Laborant> getAllLaborants() {
+    public List<LaborantDTO> getAllLaborants() {
         return laborantService.getAllLaborants();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Laborant> updateLaborant(@PathVariable Long id, @RequestBody Laborant laborant) {
-        Laborant updatedLaborant = laborantService.updateLaborant(id, laborant);
+    public ResponseEntity<LaborantDTO> updateLaborant(@PathVariable Long id, @RequestBody LaborantDTO laborantDTO) {
+        LaborantDTO updatedLaborant = laborantService.updateLaborant(id, laborantDTO);
         return ResponseEntity.ok(updatedLaborant);
     }
 
