@@ -1,12 +1,12 @@
-import { Menu, Group, Center, Burger, Container } from '@mantine/core';
+import { Menu, Group, Center, Burger, Container, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './HeaderMenu.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const links = [
-    { link: '/', label: 'Ana Sayfa' },
+    { link: '/home', label: 'Ana Sayfa' },
     {
         link: '/reports',
         label: 'Raporlar',
@@ -25,8 +25,19 @@ const links = [
     },
 ];
 
-export function HeaderMenu() {
+interface HeaderMenuProps {
+    setIsAuthenticated: (isAuthenticated: boolean) => void;
+}
+
+export function HeaderMenu({ setIsAuthenticated }: HeaderMenuProps) {
     const [opened, { toggle }] = useDisclosure(false);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setIsAuthenticated(false);
+        navigate('/login');
+    };
 
     const items = links.map((link) => {
         const menuItems = link.links?.map((item) => (
@@ -70,6 +81,9 @@ export function HeaderMenu() {
                     <img style={{ marginTop: '9px' }} src="./labmasterlogo.ico" />
                     <Group gap={5} visibleFrom="sm">
                         {items}
+                        <Button onClick={handleLogout} color="red" ml="auto" variant='light'>
+                            Çıkış Yap
+                        </Button>
                     </Group>
                     <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
                 </div>
