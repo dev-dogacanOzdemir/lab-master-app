@@ -3,13 +3,11 @@ package com.doa.lab_master_backend.Controller;
 import com.doa.lab_master_backend.DTO.LabReportDTO;
 import com.doa.lab_master_backend.Service.LabReportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -20,9 +18,7 @@ public class LabReportController {
 
     @PostMapping
     public ResponseEntity<LabReportDTO> createLabReport(@RequestParam(value = "file", required = false) MultipartFile file,
-                                                        @ModelAttribute LabReportDTO labReportDTO,
-                                                        @RequestParam("laborantId") Long laborantId,
-                                                        @RequestParam("reportDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate reportDate) {
+                                                        @ModelAttribute LabReportDTO labReportDTO) {
         try {
             LabReportDTO savedLabReport = labReportService.saveLabReport(labReportDTO, file);
             return ResponseEntity.ok(savedLabReport);
